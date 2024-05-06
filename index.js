@@ -7,7 +7,8 @@ class EasyCopyPaste {
         this.wordReplacements = Object.fromEntries([
             ['Professional Killstreak', 'Pro Ks'],
             ['Specialized Killstreak', 'Spec Ks'],
-            ['Killstreak', 'Ks']
+            ['Killstreak', 'Ks'],
+            ['Australium', 'Aus']
         ]);
         this.defaultChars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         this.boldChars = '𝗮𝗯𝗰𝗱𝗲𝗳𝗴𝗵𝗶𝗷𝗸𝗹𝗺𝗻𝗼𝗽𝗾𝗿𝘀𝘁𝘂𝘃𝘄𝘅𝘆𝘇𝗔𝗕𝗖𝗗𝗘𝗙𝗚𝗛𝗜𝗝𝗞𝗟𝗠𝗡𝗢𝗣𝗤𝗥𝗦𝗧𝗨𝗩𝗪𝗫𝗬𝗭𝟬𝟭𝟮𝟯𝟰𝟱𝟲𝟳𝟴𝟵';
@@ -66,6 +67,15 @@ class EasyCopyPaste {
     replaceLongWords(str, shorten) {
         const replacements = Object.entries(this.wordReplacements)
             .sort((a, b) => b[0].length - a[0].length);
+        // Trigger on "key" and "Mann Co. Supply Crate Key" - shorten name
+        switch (str) {
+            case 'Mann Co. Supply Crate Key':
+                return 'key';
+            case 'key':
+                return 'Mann Co. Supply Crate Key';
+            default:
+                break;
+        }
         // Replace phrases with their shortened or lengthened versions
         for (const [phrase, replacementPhrase] of replacements) {
             const phraseRegex = new RegExp(`\\b${phrase}\\b`, 'gi');
