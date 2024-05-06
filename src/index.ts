@@ -14,7 +14,8 @@ export default class EasyCopyPaste {
     private readonly wordReplacements = Object.fromEntries([
         ['Professional Killstreak', 'Pro Ks'],
         ['Specialized Killstreak', 'Spec Ks'],
-        ['Killstreak', 'Ks']
+        ['Killstreak', 'Ks'],
+        ['Australium', 'Aus']
     ]);
 
     /**
@@ -77,6 +78,16 @@ export default class EasyCopyPaste {
         const replacements = Object.entries(this.wordReplacements)
             .sort((a, b) => b[0].length - a[0].length);
 
+        // trigger on "key" and "Mann Co. Supply Crate Key" - shorten name; 
+         switch (str) {
+            case 'Mann Co. Supply Crate Key':
+                return 'key';
+            case 'key':
+                return 'Mann Co. Supply Crate Key';
+            default:
+                break;
+        }
+        
         // Replace phrases with their shortened or lengthened versions
         for (const [phrase, replacementPhrase] of replacements) {
             const phraseRegex = new RegExp(`\\b${phrase}\\b`, 'gi');
